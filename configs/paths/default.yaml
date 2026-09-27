@@ -1,0 +1,10 @@
+# Пути проекта (план, блок 23). ${…} — ссылка на другое значение конфига,
+# ${oc.env:MODELS,null} — значение переменной окружения MODELS (null, если её нет).
+root: null                       # папка репозитория; null — её найдёт urec.config
+data: ${paths.root}/data         # маленькие данные в git: items, calibration, …
+results: ${paths.root}/results   # результаты: raw (ссылка на Drive), tables, figures
+raw: ${paths.results}/raw        # папки запусков {run}: spec, манифест, оценка, атаки
+logs: ${paths.root}/logs         # логи шагов: logs/{run}/{шаг}.log
+models: ${oc.env:MODELS,null}    # скачанные модели; в Colab — /content/fast/models
+fork_dir: ${paths.root}/external/open-unlearning   # форк OpenUnlearning
+checkpoints: ${paths.fork_dir}/saves/unlearn       # модели после забывания: {checkpoints}/{run}

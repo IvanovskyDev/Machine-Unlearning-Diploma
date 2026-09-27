@@ -1,0 +1,4 @@
+[submodule "external/open-unlearning"]
+	path = external/open-unlearning
+	url = https://github.com/IvanovskyDev/open-unlearning.git
+	branch = tau

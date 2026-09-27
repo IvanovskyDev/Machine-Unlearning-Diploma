@@ -1,0 +1,25 @@
+# Пакеты для тестов на CPU: проверка на GitHub (CI) и компьютер без GPU (план, блок 9).
+# Это список «что нужно»; точные версии — в requirements-cpu.txt, его пишет программа:
+#   uv pip compile envs/requirements-cpu.in -c envs/requirements-atk.lock --python-version 3.11 --python-platform linux -o envs/requirements-cpu.txt
+# -c envs/requirements-atk.lock — у общих с atk пакетов те же версии, что в atk.
+# Список растёт вместе с кодом urec: новый пакет — новая строка и новая команда выше.
+
+# нужны пакету urec (pyproject.toml, dependencies)
+orjson
+zstandard
+huggingface-hub
+hydra-core
+numpy
+openai
+tenacity
+pyyaml
+
+# нужны тестам: токенизатор моделей для золотого теста промпта victim (urec.serve.render)
+transformers
+jinja2
+
+# инструменты разработчика (pyproject.toml, dev)
+pytest
+hypothesis
+mypy
+pre-commit

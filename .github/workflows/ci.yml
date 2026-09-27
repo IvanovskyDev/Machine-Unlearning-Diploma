@@ -1,0 +1,29 @@
+# Проверка кода на GitHub — CI (план, блок 25, шаг 4).
+# Запускается при каждом Pull Request и при каждом изменении main.
+# Результат виден на странице PR: зелёная галочка — всё прошло, красный крестик — что-то упало.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # скачать репозиторий вместе с форком; заодно проверяется, что коммит форка есть на GitHub
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      # пакеты точных версий из envs/, затем сам urec в режиме разработки
+      - run: pip install -r envs/requirements-cpu.txt && pip install -e ".[dev]"
+      # те же автопроверки, что при коммите: ruff 0.6.9, конец файла, пробелы в конце строк
+      - run: pre-commit run --all-files --show-diff-on-failure
+      # строгая проверка типов всего пакета urec
+      - run: mypy src/urec
+      # тесты без GPU
+      - run: pytest -m "not gpu" -q

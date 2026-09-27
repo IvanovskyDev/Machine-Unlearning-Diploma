@@ -1,0 +1,11 @@
+{
+  "open-unlearning/tofu_Llama-3.2-1B-Instruct_full": "88e31200b97e4c0c04ae0d2f0b591f427046d192",
+  "open-unlearning/tofu_Llama-3.2-1B-Instruct_retain99": "64a2028a51b386a06898464142df1d89749fdab3",
+  "open-unlearning/tofu_Llama-3.2-3B-Instruct_full": "24f31ca19f6966dcb6f6b29abc511cce71222d4a",
+  "open-unlearning/tofu_Llama-3.2-3B-Instruct_retain95": "6df93709a833a8d58f287148e2e290c248ed7d4e",
+  "open-unlearning/tofu_Llama-3.2-3B-Instruct_retain99": "dae63696ae088210d60a08f8436641910439ae42",
+  "open-unlearning/tofu_Llama-3.2-3B-Instruct_retain90": "2c35819e9a731d096df9abd6efbcc361870c5333",
+  "Qwen/Qwen2.5-7B-Instruct": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "Qwen/Qwen2.5-14B-Instruct-AWQ": "539535859b135b0244c91f3e59816150c8056698",
+  "sentence-transformers/all-mpnet-base-v2": "e8c3b32edf5434bc2275fc9bab85f82640a19130"
+}

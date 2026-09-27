@@ -1,0 +1,23 @@
+# Python и инструменты
+__pycache__/
+*.pyc
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# тяжёлое и сырое: живёт на Drive и на диске машины Colab, не в git
+/results/raw
+/logs/
+/saves
+wandb/
+data/cache/
+*.safetensors
+*.bin
+*.pt
+*.npy
+
+# секреты
+.env
+.git-credentials
