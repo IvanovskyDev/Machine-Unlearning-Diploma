@@ -10,8 +10,7 @@
 
 | Часть плана | Блокнот | Статус |
 |---|---|---|
-| A. Подготовка: доступы, машина, инструменты | [`notebooks/A_setup.ipynb`](notebooks/A_setup.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/A_setup.ipynb) | работает |
-| B. Окружения Python: `unl` и `atk` | [`notebooks/B_environments.ipynb`](notebooks/B_environments.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/B_environments.ipynb) | работает |
+| A–B. Подготовка: доступы, машина, окружения Python `unl` и `atk` | [`notebooks/A_setup.ipynb`](notebooks/A_setup.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/A_setup.ipynb) | части A и B объединены, команды — в `scripts/colab_setup.py`; нужна проверка в Colab |
 | C. Модели и данные TOFU | [`notebooks/C_models_data.ipynb`](notebooks/C_models_data.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/C_models_data.ipynb) | работает |
 | D. Первые запуски руками | [`notebooks/D_first_runs.ipynb`](notebooks/D_first_runs.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/D_first_runs.ipynb) | работает; обучение в шагах 12–13 — на A100 с весами во float32 |
 | E. Наш репозиторий, форк OpenUnlearning, архитектура | [`notebooks/E_repository.ipynb`](notebooks/E_repository.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/E_repository.ipynb) | работает |
@@ -27,13 +26,13 @@
 |---|---|---|
 | GitHub (этот репозиторий) | код, блокноты, скрипты, конфиги, lock-файлы, итоговые таблицы и рисунки | маленькое, нужна история изменений |
 | GitHub, форк [`IvanovskyDev/open-unlearning`](https://github.com/IvanovskyDev/open-unlearning), ветка `tau` | изменения внутри OpenUnlearning; подключён сюда как submodule `external/open-unlearning` | свои изменения фреймворка с историей, версия не меняется без нас |
-| Google Drive, `MyDrive/unlearning_data/` | чекпоинты, результаты атак, логи, лабораторный журнал, таблицы для чтения (`data/`), копии lock-файлов для блокнотов B–D (`envs/`; главные — в `envs/` репозитория) | уникальное, не должно пропасть при отключении Colab |
+| Google Drive, `MyDrive/unlearning_data/` | чекпоинты, результаты атак, логи, лабораторный журнал, таблицы для чтения (`data/`), копии lock-файлов для блокнотов C–D (`envs/`; главные — в `envs/` репозитория) | уникальное, не должно пропасть при отключении Colab |
 | Диск машины Colab, `/content/` | кэш Hugging Face, скачанные модели, окружения Python | большое, но за минуты скачивается заново |
 
 Правила:
 
 - Код и блокноты правятся в одном месте — на Windows — и уходят в GitHub; в Colab блокноты только открывают и запускают. Так правки не конфликтуют.
-- Блокнот выполняется сверху вниз. Машина Colab каждый раз новая, поэтому каждая сессия начинается с шагов 1–2 части B (Drive, папки, переменные окружения, токен Hugging Face, uv), а окружения `unl` и `atk` собираются заново из lock-файлов (шаг 14 части B). `pip install -U` в них не делается.
+- Блокнот выполняется сверху вниз. Машина Colab каждый раз новая, поэтому каждая сессия начинается с ячейки, которая клонирует репозиторий и подключает `scripts/colab_setup.py`, и с `colab_setup.start_session()` (Drive, папки, переменные окружения, токен Hugging Face); окружения `unl` и `atk` заново собирает из lock-файлов `colab_setup.build_envs()`. `pip install -U` в них не делается. Блокноты C–F переводятся на это по очереди.
 - Репозиторий клонируется вместе с форком: `git clone --recurse-submodules https://github.com/IvanovskyDev/Machine-Unlearning-Diploma.git`. Правка в форке — это два коммита: в форк и в этот репозиторий (разбор E, раздел 3).
 - Каждая часть и веха — в своей ветке и вливается через Pull Request; перед коммитом работают автопроверки pre-commit (разбор E, раздел 5). На GitHub те же проверки и все тесты запускает CI, и PR вливается только с зелёной галочкой (разбор F_M0, раздел 14).
 - Токен Hugging Face хранится только в Colab Secrets (`HF_TOKEN`) и никогда не попадает в код.
@@ -54,7 +53,7 @@ Machine-Unlearning-Diploma/
 ├── pyproject.toml             # пакет urec: зависимости, настройки ruff, pytest, mypy
 ├── docs/                      # разборы частей для новичка: A_B, C, D, E, F_M0, F_M1
 ├── notebooks/                 # блокноты Colab частей A–F
-├── scripts/                   # check_env.sh, measure.sh, start_vllm.sh, stop_vllm.sh, check_atk.py
+├── scripts/                   # colab_setup.py (настройка Colab для блокнотов), check_env.py, check_env.sh, measure.sh, start_vllm.sh, stop_vllm.sh
 ├── envs/                      # lock-файлы окружений, ревизии моделей, пакеты для тестов на CPU
 ├── external/open-unlearning/  # форк OpenUnlearning, ветка tau (submodule)
 ├── configs/                   # Hydra-конфиги urec: main, paths, data, envs, fork
