@@ -15,14 +15,18 @@ from urec.io import (
     atomic_write,
     is_done,
     mark_done,
+    read_json,
     read_jsonl,
     read_jsonl_zst,
+    read_yaml,
     sha256_file,
+    write_json,
     write_jsonl,
+    write_yaml,
 )
-from urec.types import QAItem
+from urec.types import QAItem, RunSpec
 
-from sample_records import ALL_RECORDS, QA_ITEM  # образцы записей
+from sample_records import ALL_RECORDS, QA_ITEM, RUN_SPEC  # образцы записей
 
 
 def record_name(record):
@@ -45,6 +49,29 @@ def test_jsonl_zst_round_trip(tmp_path, record):
         for _ in range(5):
             writer.write(record)
     assert list(read_jsonl_zst(path, type(record))) == [record] * 5
+
+
+@pytest.mark.parametrize("record", ALL_RECORDS, ids=record_name)
+def test_json_and_yaml_round_trip(tmp_path, record):
+    write_json(tmp_path / "record.json", record)
+    assert read_json(tmp_path / "record.json", type(record)) == record
+    write_yaml(tmp_path / "record.yaml", record)
+    assert read_yaml(tmp_path / "record.yaml", type(record)) == record
+
+
+def test_yaml_is_easy_to_read(tmp_path):
+    path = tmp_path / "spec.yaml"
+    write_yaml(path, RUN_SPEC)
+    text = path.read_text(encoding="utf-8")
+    assert text.startswith("run: exp2_3B_f05_NPO_base_s1\nexp: exp2\n")  # поля — в порядке класса
+    assert "unlearn_overrides:\n- trainer.args.learning_rate=2e-5\n" in text  # список — столбиком
+
+
+def test_yaml_list_instead_of_record_is_an_error(tmp_path):
+    path = tmp_path / "spec.yaml"
+    path.write_text("- run: exp2_3B_f05_NPO_base_s1\n", encoding="utf-8")  # список, а не запись
+    with pytest.raises(ValueError, match="spec.yaml: ожидалась запись"):
+        read_yaml(path, RunSpec)
 
 
 def test_zst_file_is_compressed(tmp_path):

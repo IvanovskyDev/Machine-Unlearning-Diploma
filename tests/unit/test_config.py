@@ -16,7 +16,12 @@ def test_default_config():
     cfg = load_config()
     assert Path(cfg.paths.root) == REPO_ROOT  # папку репозитория urec.config нашёл сам
     assert Path(cfg.paths.data) == REPO_ROOT / "data"
-    assert Path(cfg.paths.fork_dir) == REPO_ROOT / "external" / "open-unlearning"
+    fork = REPO_ROOT / "external" / "open-unlearning"
+    assert Path(cfg.paths.fork_dir) == fork
+    assert Path(cfg.paths.checkpoints) == fork / "saves" / "unlearn"
+    assert Path(cfg.paths.raw) == REPO_ROOT / "results" / "raw"
+    assert cfg.envs.unl == "/content/envs/unl/bin/python"  # python окружения unl в Colab
+    assert cfg.allow_dirty is False  # по умолчанию — только из чистого репозитория
     assert list(cfg.data.forget_splits) == ["forget01", "forget05", "forget10"]
     assert cfg.data.retain_eval_size == 400
     assert cfg.data.retain_eval_seed == 0

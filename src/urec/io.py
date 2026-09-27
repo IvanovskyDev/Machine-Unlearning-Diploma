@@ -6,6 +6,7 @@
 - маркер DONE ставится последним: папка с DONE — выполненный шаг;
 - JSONL — по одной записи JSON на строку; пишется через orjson (буквы не-ASCII
   не экранируются), большие журналы сжимаются zstd;
+- файл с одной записью — JSON (manifest.json) или YAML (spec.yaml, его правят руками);
 - чтение проверяет schema_version и набор полей.
 """
 
@@ -17,6 +18,7 @@ from pathlib import Path
 from typing import TypeVar
 
 import orjson
+import yaml
 import zstandard
 
 from urec.types import Record
@@ -45,6 +47,29 @@ def read_jsonl(path: str | Path, cls: type[T]) -> list[T]:
     """Читает файл .jsonl и возвращает список объектов класса cls."""
     with open(path, "rb") as f:
         return [_from_line(line, cls, f"{path}:{number}") for number, line in enumerate(f, 1)]
+
+
+def write_json(path: str | Path, record: Record) -> None:
+    """Записывает одну запись в файл JSON с отступами (например, manifest.json). Атомарно."""
+    atomic_write(path, orjson.dumps(record, option=orjson.OPT_INDENT_2) + b"\n")
+
+
+def read_json(path: str | Path, cls: type[T]) -> T:
+    """Читает файл JSON с одной записью и возвращает объект класса cls."""
+    return _from_line(Path(path).read_bytes(), cls, str(path))
+
+
+def write_yaml(path: str | Path, record: Record) -> None:
+    """Записывает одну запись в файл YAML (например, spec.yaml). Атомарно."""
+    data = orjson.loads(orjson.dumps(record))  # запись → словарь: так же, как её видит JSON
+    text = yaml.safe_dump(data, allow_unicode=True, sort_keys=False)  # поля — в порядке класса
+    atomic_write(path, text.encode("utf-8"))
+
+
+def read_yaml(path: str | Path, cls: type[T]) -> T:
+    """Читает файл YAML с одной записью и возвращает объект класса cls."""
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    return _from_data(data, cls, str(path))
 
 
 class JsonlZstWriter:
@@ -127,8 +152,14 @@ def _from_line(line: bytes | str, cls: type[T], where: str) -> T:
         data = orjson.loads(line)
     except orjson.JSONDecodeError as error:  # например, строка оборвана на середине
         raise ValueError(f"{where}: строка не читается как JSON: {error}") from error
+    return _from_data(data, cls, where)
+
+
+def _from_data(data: object, cls: type[T], where: str) -> T:
+    """Прочитанные из файла данные → объект класса cls; проверяет форму, версию и поля."""
     if not isinstance(data, dict):
-        raise ValueError(f"{where}: ожидался объект JSON {{…}}, а прочитан {type(data).__name__}")
+        kind = type(data).__name__  # например, list: в файле список, а не запись
+        raise ValueError(f"{where}: ожидалась запись {{поле: значение, …}}, а прочитан {kind}")
     if data.get("schema_version") != cls.schema_version:
         raise ValueError(
             f"{where}: schema_version {data.get('schema_version')}, "

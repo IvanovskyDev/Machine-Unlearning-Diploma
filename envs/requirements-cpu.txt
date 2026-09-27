@@ -185,6 +185,7 @@ python-discovery==1.6.1
 pyyaml==6.0.3
     # via
     #   -c envs/requirements-atk.lock
+    #   -r envs/requirements-cpu.in
     #   huggingface-hub
     #   omegaconf
     #   pre-commit

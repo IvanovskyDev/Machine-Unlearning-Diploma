@@ -29,10 +29,14 @@ def test_hard_example_needs_one_response_less_than_prompts():
 
 def test_manifest_turns_dicts_into_step_status():
     step = {
-        "started": "2026-10-14T12:30:05",
+        "started": "2026-10-14T12:30:05+03:00",
         "finished": None,
         "status": "running",
         "seconds": None,
+        "command": ["python", "src/eval.py"],
+        "peak_gpu_mib": None,
     }
     manifest = replace(MANIFEST, steps={"eval": step})
-    assert manifest.steps["eval"] == StepStatus("2026-10-14T12:30:05", None, "running", None)
+    assert manifest.steps["eval"] == StepStatus(
+        "2026-10-14T12:30:05+03:00", None, "running", None, ["python", "src/eval.py"], None
+    )

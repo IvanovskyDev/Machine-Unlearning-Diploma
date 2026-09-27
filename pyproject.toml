@@ -20,6 +20,7 @@ dependencies = [
     "numpy",  # сид для NumPy в seed_everything (urec.config)
     "openai",  # запросы к серверам vLLM (urec.serve.client)
     "tenacity",  # повторы запросов при сбоях (urec.serve.client)
+    "pyyaml",  # файлы spec.yaml запусков (urec.io, urec.pipeline)
 ]
 
 [project.optional-dependencies]
@@ -49,3 +50,7 @@ untyped_calls_exclude = ["zstandard"]  # в описании типов zstandar
 [[tool.mypy.overrides]]
 module = ["torch", "torch.*"]
 ignore_missing_imports = true  # в CI PyTorch нет, а seed_everything обходится без него
+
+[[tool.mypy.overrides]]
+module = ["yaml"]
+ignore_missing_imports = true  # у PyYAML нет описаний типов для mypy

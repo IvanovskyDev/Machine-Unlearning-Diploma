@@ -12,6 +12,7 @@ hydra-core
 numpy
 openai
 tenacity
+pyyaml
 
 # нужны тестам: токенизатор моделей для золотого теста промпта victim (urec.serve.render)
 transformers
