@@ -1,0 +1,21 @@
+# Автопроверки при каждом коммите (план, блок 19, шаг 6).
+# Включить один раз в своей копии репозитория: pip install pre-commit, затем pre-commit install.
+
+# lock-файлы в envs/ записывают программы (uv, huggingface_hub); их нельзя менять ни на байт
+exclude: ^envs/
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9                       # та же версия ruff, что у OpenUnlearning
+    hooks:
+      - id: ruff                      # ищет ошибки в коде Python и исправляет простые
+        args: [--fix]
+        exclude: ^notebooks/          # блокноты не трогаем: их вид с выровненными комментариями важнее
+      - id: ruff-format               # единое оформление кода Python
+        exclude: ^notebooks/
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0                       # в плане v4.6.0; почему новее — разбор F_M0, раздел 14
+    hooks:
+      - id: check-added-large-files   # не даст случайно закоммитить большой файл
+        args: [--maxkb=5000]
+      - id: end-of-file-fixer         # файл заканчивается переводом строки
+      - id: trailing-whitespace       # без пробелов в конце строк

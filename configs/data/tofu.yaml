@@ -1,0 +1,4 @@
+# Вопросы TOFU для data/items (план, блок 25); файлы пишет команда prepare-data.
+forget_splits: [forget01, forget05, forget10]   # сплиты забывания: 2, 10 и 20 авторов
+retain_eval_size: 400   # сколько вопросов retain в retain_eval (D_r^eval)
+retain_eval_seed: 0     # сид случайной выборки: тот же сид — тот же набор

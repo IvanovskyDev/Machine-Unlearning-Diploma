@@ -1,0 +1,4 @@
+# Python окружений (часть B): у каждого окружения свой python со своими пакетами.
+# Оркестратор запускает шаги форка питоном unl; сам urec работает в atk.
+unl: /content/envs/unl/bin/python
+atk: /content/envs/atk/bin/python

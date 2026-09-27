@@ -1,0 +1,9 @@
+# Добавки ко всем командам обучения в форке (план, блок 26; разбор D, раздел 6).
+# Они одинаковы для всех запусков: методы забывания обучаются одинаково.
+# Добавки одного запуска — в его spec.yaml (unlearn_overrides); они идут после этих.
+unlearn_overrides:
+  - model.model_args.torch_dtype=float32       # веса во float32: в bf16 шаги обучения теряются
+  - model.model_args.attn_implementation=sdpa  # FlashAttention с весами float32 не работает
+  - trainer.args.eval_strategy=no              # без оценки после каждой эпохи: её делает шаг eval
+  - trainer.args.eval_on_start=false           # без оценки перед обучением
+  - trainer.args.do_eval=false                 # без оценки после обучения
