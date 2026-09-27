@@ -10,7 +10,7 @@
 
 | Репозиторий | Что в нём | Где |
 |---|---|---|
-| основной — этот | блокноты, разборы, скрипты, lock-файлы, позже пакет `urec`, конфиги, тесты, таблицы и рисунки | `github.com/IvanovskyDev/Machine-Unlearning-in-LLM` |
+| основной — этот | блокноты, разборы, скрипты, lock-файлы, позже пакет `urec`, конфиги, тесты, таблицы и рисунки | `github.com/IvanovskyDev/Machine-Unlearning-Diploma` |
 | форк OpenUnlearning | всё, что меняется внутри фреймворка | `github.com/IvanovskyDev/open-unlearning`, ветка `tau` |
 
 В плане основной репозиторий называется `unlearning-recovery`, у нас его роль играет этот. Основной репозиторий подключает форк как **submodule** (раздел 2).

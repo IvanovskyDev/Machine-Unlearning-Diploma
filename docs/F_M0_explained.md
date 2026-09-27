@@ -195,7 +195,7 @@ TOFU (разбор C; план, блок 13) — 200 вымышленных ав
 ```python
 cfg = load_config(["data.retain_eval_seed=1"])
 cfg.data.retain_eval_seed      # 1 вместо 0 из configs/data/tofu.yaml
-cfg.paths.data                 # …/Machine-Unlearning-in-LLM/data
+cfg.paths.data                 # …/Machine-Unlearning-Diploma/data
 ```
 
 Опечатка в ключе (`data.retain_eval_sed=1`) — ошибка, а не молча созданный новый ключ: Hydra разрешает менять только то, что есть в конфиге.

@@ -1,4 +1,4 @@
-# Machine-Unlearning-in-LLM
+# Machine-Unlearning-Diploma
 
 **Evaluating and Improving the Robustness of Machine Unlearning in Large Language Models against Adaptive Multi-Turn Knowledge Recovery Attacks**
 
@@ -10,12 +10,12 @@
 
 | Часть плана | Блокнот | Статус |
 |---|---|---|
-| A. Подготовка: доступы, машина, инструменты | [`notebooks/A_setup.ipynb`](notebooks/A_setup.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-in-LLM/blob/main/notebooks/A_setup.ipynb) | работает |
-| B. Окружения Python: `unl` и `atk` | [`notebooks/B_environments.ipynb`](notebooks/B_environments.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-in-LLM/blob/main/notebooks/B_environments.ipynb) | работает |
-| C. Модели и данные TOFU | [`notebooks/C_models_data.ipynb`](notebooks/C_models_data.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-in-LLM/blob/main/notebooks/C_models_data.ipynb) | работает |
-| D. Первые запуски руками | [`notebooks/D_first_runs.ipynb`](notebooks/D_first_runs.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-in-LLM/blob/main/notebooks/D_first_runs.ipynb) | работает; обучение в шагах 12–13 — на A100 с весами во float32 |
-| E. Наш репозиторий, форк OpenUnlearning, архитектура | [`notebooks/E_repository.ipynb`](notebooks/E_repository.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-in-LLM/blob/main/notebooks/E_repository.ipynb) | работает |
-| F. Пакет `urec`, вехи M0–M8 | веха M0: [`notebooks/F_M0.ipynb`](notebooks/F_M0.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-in-LLM/blob/main/notebooks/F_M0.ipynb) | веха M0 выполнена; идёт веха M1: готовы куски 1–3 из 4 — промпт victim, серверы и клиенты vLLM, оркестратор |
+| A. Подготовка: доступы, машина, инструменты | [`notebooks/A_setup.ipynb`](notebooks/A_setup.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/A_setup.ipynb) | работает |
+| B. Окружения Python: `unl` и `atk` | [`notebooks/B_environments.ipynb`](notebooks/B_environments.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/B_environments.ipynb) | работает |
+| C. Модели и данные TOFU | [`notebooks/C_models_data.ipynb`](notebooks/C_models_data.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/C_models_data.ipynb) | работает |
+| D. Первые запуски руками | [`notebooks/D_first_runs.ipynb`](notebooks/D_first_runs.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/D_first_runs.ipynb) | работает; обучение в шагах 12–13 — на A100 с весами во float32 |
+| E. Наш репозиторий, форк OpenUnlearning, архитектура | [`notebooks/E_repository.ipynb`](notebooks/E_repository.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/E_repository.ipynb) | работает |
+| F. Пакет `urec`, вехи M0–M8 | веха M0: [`notebooks/F_M0.ipynb`](notebooks/F_M0.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanovskyDev/Machine-Unlearning-Diploma/blob/main/notebooks/F_M0.ipynb) | веха M0 выполнена; идёт веха M1: готовы куски 1–3 из 4 — промпт victim, серверы и клиенты vLLM, оркестратор |
 
 Что и зачем делает каждая строка, объяснено для новичка: части A и B — в [`docs/A_B_explained.md`](docs/A_B_explained.md), часть C — в [`docs/C_explained.md`](docs/C_explained.md), часть D — в [`docs/D_explained.md`](docs/D_explained.md), часть E — в [`docs/E_explained.md`](docs/E_explained.md), часть F по вехам — в [`docs/F_M0_explained.md`](docs/F_M0_explained.md) и [`docs/F_M1_explained.md`](docs/F_M1_explained.md).
 
@@ -34,7 +34,7 @@
 
 - Код и блокноты правятся в одном месте — на Windows — и уходят в GitHub; в Colab блокноты только открывают и запускают. Так правки не конфликтуют.
 - Блокнот выполняется сверху вниз. Машина Colab каждый раз новая, поэтому каждая сессия начинается с шагов 1–2 части B (Drive, папки, переменные окружения, токен Hugging Face, uv), а окружения `unl` и `atk` собираются заново из lock-файлов (шаг 14 части B). `pip install -U` в них не делается.
-- Репозиторий клонируется вместе с форком: `git clone --recurse-submodules https://github.com/IvanovskyDev/Machine-Unlearning-in-LLM.git`. Правка в форке — это два коммита: в форк и в этот репозиторий (разбор E, раздел 3).
+- Репозиторий клонируется вместе с форком: `git clone --recurse-submodules https://github.com/IvanovskyDev/Machine-Unlearning-Diploma.git`. Правка в форке — это два коммита: в форк и в этот репозиторий (разбор E, раздел 3).
 - Каждая часть и веха — в своей ветке и вливается через Pull Request; перед коммитом работают автопроверки pre-commit (разбор E, раздел 5). На GitHub те же проверки и все тесты запускает CI, и PR вливается только с зелёной галочкой (разбор F_M0, раздел 14).
 - Токен Hugging Face хранится только в Colab Secrets (`HF_TOKEN`) и никогда не попадает в код.
 - Каждый запуск записывается в журнал: где, чем, с какой командой, что получилось.
@@ -44,7 +44,7 @@
 ## Структура
 
 ```
-Machine-Unlearning-in-LLM/
+Machine-Unlearning-Diploma/
 ├── README.md
 ├── .gitignore                 # веса, чекпоинты, логи и секреты в git не попадают
 ├── .gitattributes             # скрипты .sh — всегда с переводами строк Linux
