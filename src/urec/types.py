@@ -137,10 +137,12 @@ class RunSpec:
 class StepStatus:
     """Состояние одного шага запуска; хранится внутри Manifest и версии своей не имеет."""
 
-    started: str  # время начала, например "2026-10-14T12:30:05"
+    started: str  # время начала с часовым поясом, например "2026-10-14T12:30:05+03:00"
     finished: str | None  # время конца; None, пока шаг идёт
-    status: str  # например "running", "done" или "failed"
+    status: str  # "running", "done" или "failed"
     seconds: float | None  # сколько секунд шёл шаг; None, пока шаг идёт
+    command: list[str]  # команда шага целиком: по ней шаг можно повторить (блок 37)
+    peak_gpu_mib: int | None  # пик занятой памяти GPU, МиБ; None — GPU нет или шаг ещё идёт
 
 
 @dataclass

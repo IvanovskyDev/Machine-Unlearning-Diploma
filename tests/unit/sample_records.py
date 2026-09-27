@@ -75,7 +75,7 @@ RUN_SPEC = RunSpec(
     variant="base",
     seed=1,
     base_model="open-unlearning/tofu_Llama-3.2-3B-Instruct_full",
-    unlearn_overrides=["trainer=NPO", "forget_split=forget05"],
+    unlearn_overrides=["trainer.args.learning_rate=2e-5"],
     regimes=["A", "D"],
     attackers=["qwen7b"],
     attack_seeds=[0, 1],
@@ -92,8 +92,22 @@ MANIFEST = Manifest(
     },
     hardware="NVIDIA A100-SXM4-80GB",
     steps={
-        "unlearn": StepStatus("2026-10-14T12:30:05", "2026-10-14T12:48:40", "done", 1115.0),
-        "eval": StepStatus("2026-10-14T12:48:41", None, "running", None),
+        "unlearn": StepStatus(
+            started="2026-10-14T12:30:05+03:00",
+            finished="2026-10-14T12:48:40+03:00",
+            status="done",
+            seconds=1115.0,
+            command=["/content/envs/unl/bin/python", "src/train.py", "trainer=NPO"],
+            peak_gpu_mib=39512,
+        ),
+        "eval": StepStatus(
+            started="2026-10-14T12:48:41+03:00",
+            finished=None,
+            status="running",
+            seconds=None,
+            command=["/content/envs/unl/bin/python", "src/eval.py"],
+            peak_gpu_mib=None,
+        ),
     },
 )
 

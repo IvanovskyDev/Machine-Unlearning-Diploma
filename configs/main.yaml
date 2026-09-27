@@ -5,3 +5,9 @@
 defaults:
   - paths: default   # где лежат данные, результаты, модели и форк (configs/paths/default.yaml)
   - data: tofu       # какие вопросы TOFU готовить (configs/data/tofu.yaml)
+  - envs: colab      # python окружений unl и atk (configs/envs/colab.yaml)
+  - fork: default    # общие добавки к командам форка (configs/fork/default.yaml)
+  - _self_           # значения этого файла (ниже) — после групп: при совпадении главнее они
+
+# true — разрешить запуск из репозитория с незакоммиченными правками (план, блок 37)
+allow_dirty: false
